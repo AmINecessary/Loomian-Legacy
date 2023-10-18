@@ -1,0 +1,564 @@
+import time
+import random
+import copy
+
+embitown = False
+drippleown = False
+fevineown = False
+eaglitown = False
+vambatown = False
+snocubown = False
+weevoltown = False
+cathornown = False
+twittleown = False
+twilatown = False
+duskitown = False
+
+momkabungahealth = 60
+momkabungaenergy = 61
+momkabungaattack = 84
+momkabungaspeed = 94
+
+
+
+starterstats = {
+    "embit": {
+        "health": 57,
+        "attack": 60,
+        "speed": 40,
+        "energy": 51,
+        "defence": 67
+    },
+    "dripple": {
+        "health": 63,
+        "attack": 64,
+        "speed": 41,
+        "energy": 51,
+        "defence": 50
+    },
+    "fevine": {
+        "health": 45,
+        "attack": 71,
+        "speed": 64,
+        "energy": 51,
+        "defence": 44
+    },
+    "eaglit": {
+        "health": 45,
+        "attack": 71,
+        "speed": 60,
+        "energy": 51,
+        "defence": 62
+    },
+    "vambat": {
+        "health": 47,
+        "attack": 54,
+        "speed": 70,
+        "energy": 51,
+        "defence": 55
+    },
+    "snocub": {
+        "health": 55,
+        "attack": 67,
+        "speed": 45,
+        "energy": 51,
+        "defence": 60
+    },
+    "weevolt": {
+        "health": 51,
+        "attack": 67,
+        "speed": 65,
+        "energy": 51,
+        "defence": 55
+    }
+}
+
+
+
+wildloomians = {
+    "cathorn": {
+        "health": 35,
+        "attack": 55,
+        "speed": 47,
+        "energy": 37,
+        "defence": 30
+    },
+    "twilat": {
+        "health": 50,
+        "attack": 50,
+        "speed": 40,
+        "energy": 41,
+        "defence": 45
+    },
+    "twittle": {
+        "health": 44,
+        "attack": 50,
+        "speed": 58,
+        "energy": 40,
+        "defence": 43
+    },
+    "duskit": {
+        "health": 74,
+        "attack": 130,
+        "speed": 109,
+        "energy": 100,
+        "defence": 100
+    }
+}
+
+
+loomians = {
+    "embit": {
+        "growl": {
+            "ec": 10,
+            "strength": 0
+        },
+        "pounce": {
+            "ec": 15,
+            "strength": 40
+        },
+        "singe": {
+            "ec": 20,
+            "strength": 40
+        }
+    },
+    "dripple": {
+        "dawdle": {
+            "ec": 10,
+            "strength": 0
+        },
+        "strike": {
+            "ec": 15,
+            "strength": 40
+        },
+        "spray": {
+            "ec": 20,
+            "strength": 40
+        }
+    },
+    "fevine": {
+        "growl": {
+            "ec": 10,
+            "strength": 0
+        },
+        "pounce": {
+            "ec": 15,
+            "strength": 40
+        },
+        "petal pummel": {
+            "ec": 20,
+            "strength": 40
+        }
+    },
+    "eaglit": {
+        "stare": {
+            "ec": 10,
+            "strength": 0
+        },
+        "pounce": {
+            "ec": 15,
+            "strength": 40
+        },
+        "shine": {
+            "ec": 20,
+            "strength": 40
+        }
+    },
+    "vambat": {
+        "growl": {
+            "ec": 10,
+            "strength": 0
+        },
+        "gnaw": {
+            "ec": 15,
+            "strength": 40
+        },
+        "chomp": {
+            "ec": 20,
+            "strength": 40
+        }
+    },
+    "snocub": {
+        "brace": {
+            "ec": 10,
+            "strength": 0
+        },
+        "strike": {
+            "ec": 15,
+            "strength": 40
+        },
+        "flurry": {
+            "ec": 20,
+            "strength": 40
+        }
+    },
+    "weevolt": {
+        "growl": {
+            "ec": 10,
+            "strength": 0
+        },
+        "pounce": {
+            "ec": 15,
+            "strength": 40
+        },
+        "static shock": {
+            "ec": 20,
+            "strength": 40
+        }
+    },
+    "cathorn": {
+        "stare": {
+            "ec": 10,
+            "strength": 0
+        },
+        "gnaw": {
+            "ec": 15,
+            "strength": 40
+        },
+        "bug bite": {
+            "ec": 20,
+            "strength": 30
+        }
+    },
+    "twilat": {
+        "dawdle": {
+            "ec": 10,
+            "strength": 0
+        },
+        "gnaw": {
+            "ec": 15,
+            "strength": 40
+        },
+        "stretch": {
+            "ec": 15,
+            "strength": 0
+        }
+    },
+    "twittle": {
+        "stare": {
+            "ec": 10,
+            "strength": 0
+        },
+        "pounce": {
+            "ec": 15,
+            "strength": 40
+        },
+        "peck": {
+            "ec": 15,
+            "strength": 35
+        }
+    },
+    "duskit": {
+        "startle": {
+            "ec": 15,
+            "strength": 30
+        },
+        "final ruse": {
+            "ec": 40,
+            "strength": 0
+        },
+        "brainwash": {
+            "ec": 24,
+            "strength": 50
+        },
+        "stupefy": {
+            "ec": 25,
+            "strength": 30
+        }
+    }
+}
+
+
+
+print("Welcome to Loomian Legacy: Veils of Shadow")
+print("Note: This is a fan based game of the game called Loomian Legacy: Veils of Shadow from Roblox. Most of the content including stories, base stats etc. are copyrighted to Llama Train Studios.")
+print('Press "Enter"' + " when you're ready.")
+input("")
+print("Loomiwatch: What is your name?")
+name = input("")
+print("Would you like to see or skip the starting story?")
+storyskip = input("")
+if "see" in storyskip.lower():
+    print("Dads assistant: Look! The tablet is moving!")
+    time.sleep(2)
+    print("Dad: Fascinating...")
+    time.sleep(5)
+    print("Dad: Oh there you are " + name + "!")
+    time.sleep(2)
+    print("You won't believe what just happened!")
+    time.sleep(2)
+    print("The tablet glowed and rearranged.")
+    print("*Rattling*")
+    time.sleep(2)
+    print("Dads assistant: Oh no! The tablet, all our search just flew away!")
+    time.sleep(2)
+    print("Dad: Yeah, and all the pieces went to different ways! So they are probably in different locations!")
+    time.sleep(2)
+    print("Dad: Come on " + name + " let's go laboratory to update your mom on all this.")
+    time.sleep(5)
+    print("Dad: There you are " + name + " perfect timing!")
+    time.sleep(2)
+    print("Mom: So the tablet just got up and flew away?")
+    time.sleep(2)
+    print("Dad: Yes and before the tablet rearranged, it said ''The creature's secret lies dormant within, until the day of awakening, it comes again.''")
+    print("Dad: I have to decipher the new tablet.")
+    time.sleep(2)
+    print("Dads assistant: Maybe we can follow their energy with a satellite.")
+    time.sleep(2)
+    print("Dad: But who will search for them?")
+    time.sleep(2)
+    print("Mom: Do you think you can do it " + name + "?")
+    time.sleep(2)
+else:
+    print("Starting game...")
+    time.sleep(5)
+while True:
+    print("Mom: Okay than, let's pick your first loomian.")
+    print("Introducing: Embit, Fire type loomian! Kinda looks like a bunny!")
+    print("Dripple, Water type loomian.")
+    print("Fevine, Nature type loomian and is a cat!")
+    print("Eaglit, Light type loomian and is a griffin!")
+    print("Vambat, Dark type loomian and is a cute bat!")
+    print("Snocub, snow type loomian and is a mammal that is covered in snow!")
+    print("And finally, Weevolt Electric type loomian!")
+    print("Which one is your favourite? Please write the name of the loomian, or simply type 1, 2, 3 as in order. For more information, you can check out the website loomian legacy fandom!")
+    starterchoice = input("")
+    if "embit" in starterchoice.lower() or "1" in starterchoice.lower():
+        print("Is Embit right?")
+        startersureness = input("")
+        if "yes" in startersureness.lower():
+            starter = "embit"
+            embitown = True
+            break
+        else:
+            print("")
+    elif "dripple" in starterchoice.lower() or "2" in starterchoice.lower():
+        print("Is Dripple right?")
+        startersureness = input("")
+        if "yes" in startersureness.lower():
+            starter = "dripple"
+            drippleown = True
+            break
+        else:
+            print("")
+    elif "fevine" in starterchoice.lower() or "3" in starterchoice.lower():
+        print("Is Fevine right?")
+        startersureness = input("")
+        if "yes" in startersureness.lower():
+            starter = "fevine"
+            fevineown = True
+            break
+        else:
+            print("")
+    elif "eaglit" in starterchoice.lower() or "4" in starterchoice.lower():
+        print("Is Eaglit right?")
+        startersureness = input("")
+        if "yes" in startersureness.lower():
+            starter = "eaglit"
+            eaglitown = True
+            break
+        else:
+            print("")
+    elif "vambat" in starterchoice.lower() or "5" in starterchoice.lower():
+        print("Is Vambat right?")
+        startersureness = input("")
+        if "yes" in startersureness.lower():
+            starter = "vambat"
+            vambatown = True
+            break
+        else:
+            print("")
+    elif "weevolt" in starterchoice.lower() or "7" in starterchoice.lower():
+        print("Is Weevolt right?")
+        startersureness = input("")
+        if "yes" in startersureness.lower():
+            starter = "weevolt"
+            weevoltown = True
+            break
+        else:
+            print("")
+    elif "snocub" in starterchoice.lower() or "6" in starterchoice.lower():
+        print("Is Snocub right?")
+        startersureness = input("")
+        if "yes" in startersureness.lower():
+            starter = "snocub"
+            snocubown = True
+            break
+        else:
+            print("")
+print("Would you like to give a nickname to the " + starter + " you choice? Yes or No?")
+nickchoice = input("")
+if "yes" in nickchoice.lower():
+    print("Nickname:")
+    starternickname = input("")
+else:
+    starternickname = starter
+
+
+starterchangedstats = starterstats.copy()
+starterlevel = 5
+starterchangedstats["health"] = starterchangedstats["health"] + 10
+starterchangedstats["attack"] = starterchangedstats["attack"] + 10
+starterchangedstats["energy"] = starterchangedstats["energy"] + 10
+starterchangedstats["speed"] = starterchangedstats["speed"] + 10
+starterchangedstats["defence"] = starterchangedstats["defence"] + 10
+starterchangedstats["attack"] = starterchangedstats["attack"] + random.randint(10,15)
+starterchangedstats["defence"] = starterchangedstats["defence"] + random.randint(10,15)
+starterchangedstats["speed"] = starterchangedstats["speed"] + random.randint(10,15)
+print("Mom: " + starter + " is a great choice! Now before we battle, I want to tell you a few things. In a battle you and your loomians work together, you can catch wild loomians to train them and battle with them. You'll learn the strategies later.")
+print("")
+print("Mom would like to battle!")
+time.sleep(2)
+print("Mom sent out kabunga!")
+time.sleep(2)
+print("Go " + starternickname + "!")
+print("")
+print("Now, let me tell you the options in a fight. There is 4 options and you have to write the name of the options.")
+time.sleep(2)
+print("First option is fight. Fight option makes you use fighting move versus your opponents! There is 4 move slots in the fight option.")
+print("Second option is bag. Bag option makes you be able to use the items in your bag such as capture discs and medicines.")
+print("Third option is loomians. Loomians option makes you be able to change the loomian you are currently using.")
+print("Fourth option is run option. You can use run option to run away from wild loomians. You can't run away from other loomian trainers.")
+print("Now try to use the fight option to fight. You can write it as fight or simply write 1 to do it.")
+action = input("")
+starterfighthealth = starterstats[starter]["health"]
+starterfightenergy = starterstats[starter]["energy"]
+starterfightdefence = starterstats[starter]["defence"]
+
+if "fight" in action.lower() or "1" in action:
+    print("Ok, so now you can choose any move you want. You have to write the name of the move in order to use it.")
+    print("Here are the moves for " + starter + ":")
+    print(loomians[starter])
+    print("ec stands for energy cost. It shows the energy you are going to use when used. Strength is an important part to define the damage that will be dealt.")
+    print("Here is the hp (Health points) for your " + starternickname + ":")
+    print(starterstats[starter])
+    print("Now if you run out of energy use 'rest' to rest your loomian for one turn. Write the move you want below.")
+    if "fight" in action.lower() or "1" in action:
+        print("Ok, so now you can choose any move you want. You have to write the name of the move in order to use it.")
+        print("Here are the moves for " + starter + ":")
+        print(loomians[starter])
+        print("ec stands for energy cost. It shows the energy you are going to use when used. Strength is an important part to define the damage that will be dealt.")
+        print("Here is the hp (Health points) for your " + starternickname + ":")
+        print(starterstats[starter])
+        print("Now if you run out of energy use 'rest' to rest your loomian for one turn now, write the move you want below.")
+        loomianmove = input("")
+else:
+    print('Please make sure you have used the "Fight" option.')
+    while True:
+        action = input("")
+        if action.lower == "fight":
+            break
+        else:
+            print('Please make sure you have used the "Fight" option.')
+if loomianmove.lower() in loomians[starter]:
+    while True:
+        if starterchangedstats[starter]["speed"] > momkabungaspeed:
+            if loomianmove.lower() == "rest":
+                print(starternickname.capitalize() + " used rest.")
+                starterfightenergy = starterfightenergy * 2.5
+            elif loomians[starter][loomianmove.lower()]["strength"] < 0 and starterfightenergy < loomians[starter][loomianmove.lower()]["ec"]:
+                print(starternickname.capitalize() + " used " + loomianmove + "!")
+                momkabungahealth = momkabungahealth - (((loomians[starter][loomianmove][strength] + starterstats[starter]["attack"]) - momkabungadefence) * 0.6)
+                starterfightenergy = starterfightenergy - loomians[starter][loomianmove][energy]
+                print("Which move will " + starternickname.capitalize() + " use?")
+                loomianmove = input("")
+            elif loomians[starter][loomianmove.lower()]["strength"] == 0 and starterfightenergy < loomians[starter][loomianmove.lower()]["ec"]:
+                if loomianmove.lower() == "growl" or loomianmove.lower() == "stare" or loomianmove.lower() == "dawdle":
+                    print(starternickname.capitalize() + " used " + loomianmove.lower() + "!")
+                    momkabungadefence = momkabungadefence - 10
+                elif loomianmove.lower() == "brace":
+                    print(starternickname.capitalize() + " used brace")
+                    starterfightdefence = starterfightdefence + 10
+                else:
+                    print("Please make sure that you wrote the move correctly.")
+            elif starterfightenergy < loomians[starter][loomianmove.lower()]["ec"]:
+                print(starternickname.capitalize() + " was so tired and couldn't use their move!")
+
+            if momkabungahealth <= 0:
+                print("Kabunga fainted")
+                break
+
+            momkabungamove = random.randint(1, 3)
+            if momkabungamove == 1 and momkabungaenergy > 15:
+                print("Kabunga used strike!")
+                starterfighthealth = starterfighthealth - (((40 + momkabungaattack) - starterfightdefence) * 0.4)
+                momkabungaenergy = momkabungaenergy - 15
+            elif momkabungamove == 2 and momkabungaenergy > 15:
+                print("Kabunga used brace!")
+                starterfightdefence = starterfightdefence - 10
+                momkabungaenergy = momkabungaenergy - 15
+            elif momkabungamove == 3 and momkabungaenergy > 20:
+                print("Kabunga used petal pummel!")
+                starterfighthealth = starterfighthealth - (((40 + momkabungaattack) - starterfightdefence) * 0.4)
+                momkabungaenergy = momkabungaenergy - 20
+            else:
+                print("Kabunga used rest.")
+                momkabungaenergy = momkabungaenergy * 2.5
+
+            if starterfighthealth <= 0:
+                print(starternickname.capitalize() + " has fainted.")
+                break
+        elif starterchangedstats[starter]["speed"] < momkabungaspeed:
+            momkabungamove = random.randint(1, 3)
+            if momkabungamove == 1 and momkabungaenergy > 15:
+                print("Kabunga used strike!")
+                starterfighthealth = starterfighthealth - (((40 + momkabungaattack) - starterfightdefence) * 0.4)
+                momkabungaenergy = momkabungaenergy - 15
+            elif momkabungamove == 2 and momkabungaenergy > 15:
+                print("Kabunga used brace!")
+                starterfightdefence = starterfightdefence - 10
+                momkabungaenergy = momkabungaenergy - 15
+            elif momkabungamove == 3 and momkabungaenergy > 20:
+                print("Kabunga used petal pummel!")
+                starterfighthealth = starterfighthealth - (((40 + momkabungaattack) - starterfightdefence) * 0.4)
+                momkabungaenergy = momkabungaenergy - 20
+            else:
+                print("Kabunga used rest.")
+                momkabungaenergy = momkabungaenergy * 2.5
+
+            if starterfighthealth <= 0:
+                print(starternickname.capitalize() + " has fainted.")
+                break
+            if loomianmove.lower() == "rest":
+                print(starternickname.capitalize() + " used rest.")
+                starterfightenergy = starterfightenergy * 2.5
+            elif loomians[starter][loomianmove.lower()]["strength"] < 0 and starterfightenergy < loomians[starter][loomianmove.lower()]["ec"]:
+                print(starternickname.capitalize() + " used " + loomianmove + "!")
+                momkabungahealth = momkabungahealth - (((loomians[starter][loomianmove][strength] + starterstats[starter]["attack"]) - momkabungadefence) * 0.6)
+                starterfightenergy = starterfightenergy - loomians[starter][loomianmove][energy]
+                print("Which move will " + starternickname.capitalize() + " use?")
+                loomianmove = input("")
+            elif loomians[starter][loomianmove.lower()]["strength"] == 0 and starterfightenergy < loomians[starter][loomianmove.lower()]["ec"]:
+                if loomianmove.lower() == "growl" or loomianmove.lower() == "stare" or loomianmove.lower() == "dawdle":
+                    print(starternickname.capitalize() + " used " + loomianmove.lower() + "!")
+                    momkabungadefence = momkabungadefence - 10
+                elif loomianmove.lower() == "brace":
+                    print(starternickname.capitalize() + " used brace")
+                    starterfightdefence = starterfightdefence + 10
+                else:
+                    print("Please make sure that you wrote the move correctly.")
+            elif starterfightenergy < loomians[starter][loomianmove.lower()]["ec"]:
+                print(starternickname.capitalize() + " was so tired and couldn't use their move!")
+
+            if momkabungahealth <= 0:
+                print("Kabunga fainted")
+                break
+        momkabungahealth = round(momkabungahealth)
+        starterfighthealth = round(starterfighthealth)
+        print(starternickname.capitalize() + " has " , starterfighthealth , " health left!")
+        print("Kabunga has " , momkabungahealth , " health left!")
+        print(starternickname.capitalize() + " has " , starterfightenergy , " energy left!")
+        print("Kabunga has " , momkabungaenergy , " energy left!")
+        print("")
+        print("What move will " + starternickname.capitalize() + " use?")
+        action = input("")
+
+#That, was extremely painful and complicated. I didn't even do the types! I am done when I will have to do the other fights.
+
+
+
+
+
+
+
+
